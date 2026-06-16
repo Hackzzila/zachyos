@@ -152,8 +152,9 @@ jobs:
       - name: Push image
         if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: |
+          skopeo copy --dest-compress-format zstd:chunked --dest-compress-level 3 oci://$(pwd)/image.oci docker://${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}
           for tag in ${{ steps.metadata.outputs.tags }}; do
-            skopeo copy --dest-compress-format zstd:chunked --dest-compress-level 3 oci://$(pwd)/image.oci docker://${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag
+            skopeo copy --dest-compress-format zstd:chunked --dest-compress-level 3 docker://${{ env.IMAGE_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }} docker://${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:$tag
           done
 
       # These `if` statements are so that pull requests for your custom images do not make it publish any packages under your name without you knowing
