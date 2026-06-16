@@ -16,7 +16,7 @@ rpm --import https://downloads.1password.com/linux/keys/1password.asc
 sh -c 'echo -e "[1password]\nname=1Password Stable Channel\nbaseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
 
 # this installs a package from fedora repos
-dnf5 install -y niri swaylock swaybg swayidle firefox xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring alacritty fuzzel polkit-kde xwayland-satellite mako ly chezmoi net-tools google-chrome-stable 1password
+dnf5 install -y niri swaylock swaybg swayidle firefox xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring alacritty fuzzel polkit-kde xwayland-satellite mako ly chezmoi net-tools google-chrome-stable 1password NetworkManager-tui
 
 # Use a COPR Example:
 #
