@@ -49,3 +49,5 @@ RUN systemctl disable getty@tty2.service
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
+
+

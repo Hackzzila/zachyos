@@ -105,6 +105,19 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
 
+      - name: Chunkah
+        run: |
+          export CHUNKAH_CONFIG_STR="$(podman inspect localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }})"
+          podman run --rm --mount=type=image,src="localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}",target=/chunkah \
+            -e CHUNKAH_CONFIG_STR quay.io/coreos/chunkah \
+            build \
+            --verbose \
+            --compressed \
+            --max-layers 128 \
+            --prune /sysroot/ \
+            --label ostree.commit- --label ostree.final-diffid- \
+            --tag localhost/chunked:latest | podman load
+
       # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
       # This does not make your image faster to download, just provides better resumability and fixes a few errors.
       # Documentation for Rechunk is provided on their github repository at https://github.com/hhd-dev/rechunk
