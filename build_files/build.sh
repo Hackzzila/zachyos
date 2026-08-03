@@ -4,6 +4,16 @@ set -ouex pipefail
 
 ### Install packages
 
+dnf5 install -y libicu76
+dnf5 install -y --releasever=42 webkit2gtk4.0
+dnf5 install -y --setopt=tsflags=noscripts /ctx/ps-pulse-linux-22.8r6-b44527-installer.rpm
+
+mkdir -p /var/lib/pulsesecure/pulse
+setfacl -d -m g::r /var/lib/pulsesecure/pulse
+setfacl -d -m o::r /var/lib/pulsesecure/pulse
+systemctl enable /lib/systemd/system/pulsesecure.service
+/opt/pulsesecure/bin/setup_cef.sh install
+
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
 # List of rpmfusion packages can be found here:
