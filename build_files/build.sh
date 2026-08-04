@@ -8,14 +8,16 @@ dnf5 install -y libicu76
 dnf5 install -y --releasever=42 webkit2gtk4.0
 dnf5 install -y --setopt=tsflags=noscripts /ctx/ps-pulse-linux-22.8r6-b44527-installer.rpm
 
-mkdir -p /var/lib/pulsesecure/pulse
-setfacl -d -m g::r /var/lib/pulsesecure/pulse
-setfacl -d -m o::r /var/lib/pulsesecure/pulse
+# mkdir -p /var/lib/pulsesecure/pulse
+# setfacl -d -m g::r /var/lib/pulsesecure/pulse
+# setfacl -d -m o::r /var/lib/pulsesecure/pulse
 systemctl enable /lib/systemd/system/pulsesecure.service
 /opt/pulsesecure/bin/setup_cef.sh install
 
 rm -rf /opt/pulsesecure
 ln -s /var/opt/pulsesecure /opt/pulsesecure
+
+ln -s /var/opt/var-lib-pulsesecure /var/lib/pulsesecure
 
 # Packages can be installed from any enabled yum repo on the image.
 # RPMfusion repos are available by default in ublue main images
@@ -31,7 +33,7 @@ rpm --import https://downloads.1password.com/linux/keys/1password.asc
 sh -c 'echo -e "[1password]\nname=1Password Beta Channel\nbaseurl=https://downloads.1password.com/linux/rpm/beta/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
 
 # this installs a package from fedora repos
-dnf5 install -y niri swaylock swaybg swayidle firefox xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring alacritty fuzzel polkit-kde xwayland-satellite mako ly chezmoi net-tools google-chrome-stable 1password NetworkManager-tui dolphin dmidecode
+dnf5 install -y niri swaylock swaybg swayidle firefox xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring alacritty fuzzel polkit-kde xwayland-satellite mako ly chezmoi net-tools google-chrome-stable 1password NetworkManager-tui dolphin
 
 # Use a COPR Example:
 #
