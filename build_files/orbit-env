@@ -7,5 +7,5 @@ ORBIT_OSQUERYD_PATH=/usr/bin/osqueryd
 ORBIT_DESKTOP_PATH=/usr/bin/fleet-desktop 
 
 ORBIT_FLEET_URL=dnrfleet-endpoint-premium.prod.netflix.net
-ORBIT_ENROLL_SECRET_FILE=/etc/fleet/enroll-secret
+ORBIT_ENROLL_SECRET_PATH=/etc/fleet/enroll-secret
 
