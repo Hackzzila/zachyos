@@ -1,0 +1,11 @@
+ORBIT_DISABLE_UPDATES=true
+ORBIT_FLEET_DESKTOP=true
+ORBIT_ENABLE_SCRIPTS=true
+
+ORBIT_ROOT_DIR=/var/lib/orbit
+ORBIT_OSQUERYD_PATH=/usr/bin/osqueryd
+ORBIT_DESKTOP_PATH=/usr/bin/fleet-desktop 
+
+ORBIT_FLEET_URL=dnrfleet-endpoint-premium.prod.netflix.net
+ORBIT_ENROLL_SECRET_FILE=/etc/fleet/enroll-secret
+

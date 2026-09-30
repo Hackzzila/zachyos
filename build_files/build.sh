@@ -32,3 +32,4 @@ dnf5 install -y niri swaylock swaybg swayidle firefox xdg-desktop-portal-gnome x
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+

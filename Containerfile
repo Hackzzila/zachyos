@@ -2,6 +2,35 @@
 FROM scratch AS ctx
 COPY build_files /
 
+
+FROM golang:latest AS orbit-build
+
+WORKDIR /build
+
+RUN git clone --branch 7319-orbit-nixos-external-components --sparse --depth 1 --filter=blob:none  https://github.com/fleetdm/fleet.git .
+
+RUN git sparse-checkout set orbit server client pkg ee
+
+RUN CGO_ENABLED=1 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    go build \
+    -trimpath \
+    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    -o ./orbit ./orbit/cmd/orbit
+
+RUN CGO_ENABLED=1 \
+    GOOS=linux \
+    GOARCH=amd64 \
+    go build \
+    -trimpath \
+    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    -o ./fleet-desktop ./orbit/cmd/desktop
+
 # Base Image
 FROM ghcr.io/ublue-os/base-main:44
 
@@ -42,6 +71,12 @@ RUN --mount=type=cache,dst=/var/cache \
     /usr/bin/systemctl preset brew-setup.service && \
     /usr/bin/systemctl preset brew-update.timer && \
     /usr/bin/systemctl preset brew-upgrade.timer
+
+COPY --from=orbit-build /build/orbit /usr/bin/orbit
+COPY --from=orbit-build /build/fleet-desktop /usr/bin/fleet-desktop
+COPY ./build_files/orbit.service /usr/lib/systemd/system/orbit.service
+COPY ./build_files/orbit-env /etc/default/orbit
+RUN systemctl enable orbit.service
 
 RUN systemctl enable ly@tty2.service
 RUN systemctl disable getty@tty2.service

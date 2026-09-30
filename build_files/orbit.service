@@ -1,0 +1,17 @@
+[Unit]
+Description=Orbit osquery
+After=network.service syslog.service
+StartLimitIntervalSec=0
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/default/orbit
+ExecStart=/usr/bin/orbit
+Restart=always
+RestartSec=1
+KillMode=control-group
+KillSignal=SIGTERM
+CPUQuota=20%
+
+[Install]
+WantedBy=multi-user.target
