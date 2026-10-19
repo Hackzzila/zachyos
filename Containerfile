@@ -7,22 +7,22 @@ FROM golang:latest AS orbit-build
 
 WORKDIR /build
 
-RUN git clone --branch orbit-v1.62.0 --sparse --depth 1 --filter=blob:none  https://github.com/fleetdm/fleet.git .
+RUN git clone --branch main --sparse --depth 1 --filter=blob:none  https://github.com/fleetdm/fleet.git .
 
 RUN git sparse-checkout set orbit server client pkg ee
 
-ENV VERSION=1.62.0
-ENV COMMIT=06c052b28de318c9ef2704d2e387ebd9f7f3dfa2
-ENV DATE=2026-10-19T13:50:14Z
+#ENV VERSION=1.62.0
+#ENV COMMIT=06c052b28de318c9ef2704d2e387ebd9f7f3dfa2
+#ENV DATE=2026-10-19T13:50:14Z
 
 RUN CGO_ENABLED=1 \
     GOOS=linux \
     GOARCH=amd64 \
     go build \
     -trimpath \
-    -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
-    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
-    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
     -o ./orbit-linux ./orbit/cmd/orbit
 
 RUN CGO_ENABLED=1 \
@@ -30,9 +30,9 @@ RUN CGO_ENABLED=1 \
     GOARCH=amd64 \
     go build \
     -trimpath \
-    -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
-    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
-    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
     -o ./fleet-desktop ./orbit/cmd/desktop
 
 # Base Image
