@@ -2,14 +2,18 @@
 FROM scratch AS ctx
 COPY build_files /
 
-
+# Build orbit
 FROM golang:latest AS orbit-build
 
 WORKDIR /build
 
-RUN git clone --branch 7319-orbit-nixos-external-components --sparse --depth 1 --filter=blob:none  https://github.com/fleetdm/fleet.git .
+RUN git clone --branch orbit-v1.62.0 --sparse --depth 1 --filter=blob:none  https://github.com/fleetdm/fleet.git .
 
 RUN git sparse-checkout set orbit server client pkg ee
+
+ENV VERSION=1.62.0
+ENV COMMIT=06c052b28de318c9ef2704d2e387ebd9f7f3dfa2
+ENV DATE=2026-10-19T13:50:14Z
 
 RUN CGO_ENABLED=1 \
     GOOS=linux \
