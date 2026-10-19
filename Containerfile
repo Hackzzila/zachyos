@@ -20,9 +20,9 @@ RUN CGO_ENABLED=1 \
     GOARCH=amd64 \
     go build \
     -trimpath \
-    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
-    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
-    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
     -o ./orbit-linux ./orbit/cmd/orbit
 
 RUN CGO_ENABLED=1 \
@@ -30,9 +30,9 @@ RUN CGO_ENABLED=1 \
     GOARCH=amd64 \
     go build \
     -trimpath \
-    # -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
-    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
-    # -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
+    -ldflags="-s -w -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Version=$VERSION \
+    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Commit=$COMMIT \
+    -X github.com/fleetdm/fleet/v4/orbit/pkg/build.Date=$DATE" \
     -o ./fleet-desktop ./orbit/cmd/desktop
 
 # Base Image
